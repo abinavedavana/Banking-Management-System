@@ -16,7 +16,7 @@ A full-stack banking web application built using the MERN stack that allows user
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 **Frontend**
 
@@ -40,7 +40,7 @@ A full-stack banking web application built using the MERN stack that allows user
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 Banking-Management-System
@@ -56,7 +56,7 @@ Banking-Management-System
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
 ### Clone the repository
 
