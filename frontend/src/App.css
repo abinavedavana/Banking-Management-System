@@ -1,0 +1,46 @@
+::-webkit-scrollbar {
+  width: 6px;
+  visibility: hidden;
+}
+::-webkit-scrollbar-thumb {
+  background: #059669;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+
+/* Alert Base */
+.alert {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+/* Success */
+.alert-success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-left: 5px solid #10b981;
+}
+
+/* Error */
+.alert-error {
+  background-color: #fee2e2;
+  color: #7f1d1d;
+  border-left: 5px solid #ef4444;
+}
+
+/* Warning */
+.alert-warning {
+  background-color: #fef3c7;
+  color: #78350f;
+  border-left: 5px solid #f59e0b;
+}
+
+/* Info */
+.alert-info {
+  background-color: #dbeafe;
+  color: #1e3a8a;
+  border-left: 5px solid #3b82f6;
+}
