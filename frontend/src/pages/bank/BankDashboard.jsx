@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const API = import.meta.env.VITE_API_URL;
+
 const BankDashboard = () => {
 
   const [usersCount , setUsersCount] = useState(0);
@@ -12,7 +14,7 @@ const BankDashboard = () => {
         const token = localStorage.getItem("adminToken");
 
         const res = await axios.get(
-          "http://localhost:5000/api/admin/users",
+          `${API}/api/admin/users`,
           {
             headers:{Authorization:`Bearer ${token}`}
           }

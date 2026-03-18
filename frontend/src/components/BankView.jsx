@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
+const API = import.meta.env.VITE_API_URL;
 
 const BankView = () => {
 
@@ -12,7 +13,7 @@ const BankView = () => {
     
     const fetchUser = async () =>{
       try{
-        const res = await fetch(`http://localhost:5000/api/admin/users/${id}`);
+        const res = await fetch(`${API}/api/admin/users/${id}`);
         const data = await res.json();
 
         setUser(data);

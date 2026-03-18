@@ -4,6 +4,8 @@ import { useNavigate,Link } from 'react-router-dom';
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Register = () => {
 
   const navigate = useNavigate();
@@ -62,7 +64,7 @@ const Register = () => {
     try{
 
       //registration
-      await axios.post("http://localhost:5000/api/users/register", {
+      await axios.post(`${API}/api/users/register`, {
         name: formData.name,
         username: formData.username,
         email: formData.email,
@@ -77,7 +79,7 @@ const Register = () => {
       });
 
       //login to get token
-      const loginRes = await axios.post("http://localhost:5000/api/users/login",{
+      const loginRes = await axios.post(`${API}/api/users/login`,{
         identifier: formData.username,
         password: formData.password,
       })
@@ -85,7 +87,7 @@ const Register = () => {
       const token = loginRes.data.token;
 
       //deposit initial ammount
-      await axios.post("http://localhost:5000/api/transactions/deposit",{
+      await axios.post(`${API}/api/transactions/deposit`,{
         amount: Number(formData.initialAmount),
       },{
         headers:{

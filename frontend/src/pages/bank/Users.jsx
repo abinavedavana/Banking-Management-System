@@ -2,6 +2,8 @@ import { Search } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const API = import.meta.env.VITE_API_URL;
+
 const Users = () => {
 
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const Users = () => {
       try{
         const token = localStorage.getItem("adminToken");
 
-        const res = await  fetch("http://localhost:5000/api/admin/users",{
+        const res = await  fetch(`${API}/api/admin/users`,{
           headers:{Authorization:`Bearer${token}`}
         });
 

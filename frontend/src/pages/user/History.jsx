@@ -1,90 +1,7 @@
-// import React, { useEffect, useState } from "react";
-
-// const History = () => {
-//   const [transactions, setTransactions] = useState([]);
-
-//   useEffect(() => {
-//     const fetchHistory = async () => {
-//       try{
-//         const token = localStorage.getItem("token");
-//         if(!token) throw new Error("No auth token found");
-
-//         const res = await fetch("http://localhost:5000/api/transactions/history",{
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           }
-//         });
-
-//       if(!res.ok){
-//         const data = await res.json();
-//         throw new Error(data.message || "Failed to fetch");
-//       }  
-
-//         const data = await res.json();
-//         setTransactions(data);
-
-//       }catch(error){
-//         alert("Failed to fetch history:"+ error.message)
-//       }
-//     };
-    
-//     fetchHistory();
-
-//   }, []);
-
-//   return (
-//     <div className="relative min-h-screen w-full">
-//       <img
-//         src="/image.png"
-//         alt="img"
-//         className="absolute inset-0 w-full h-full object-cover"
-//       />
-//       <div className="absolute inset-0 bg-gray-700/70"></div>
-
-//         <div className="relative z-10 flex justify-center px-4 sm:px-8 pt-24 pb-16">
-//           <div className="bg-emerald-400 rounded-2xl w-full p-10 "> 
-//             <hr className="border border-black"/>
-//             <div className="grid grid-cols-5  font-semibold border-b border-black pb-2 mb-4">
-//               <p>Date</p>
-//               <p>Time</p>
-//               <p>Details</p>
-//               <p>Amount</p>
-//               <p>Balance</p>
-//             </div>
-//             {
-//               transactions.length === 0 ?(
-//                 <p className="text-center text-gray-700 mt-10">
-//                   No Transactions Found
-//                 </p>
-//               ) : (
-//                 transactions.map((tx,index)=>(
-//                   <div key={index}
-//                        className="grid grid-cols-5 py-2 border-b border-black text-sm">
-//                         <p>{new Date(tx.createdAt).toLocaleDateString()}</p>
-//                         <p>{new Date(tx.createdAt).toLocaleTimeString()}</p>
-//                         <p className={tx.type === "Credit" ? "text-blue-700 font-semibold" : tx.type === "Transfer" ? "text-teal-900 font-semibold" : tx.type === "Received" ? "text-green-900 font-semibold" : "text-red-700 font-semibold"}>
-//                           {tx.type}
-//                         </p>
-//                         <p>{tx.amount}</p>
-//                         <p>{tx.balanceAfter ?? "-"}</p>
-//                   </div>
-//                 ))
-//               )
-//             }
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default History;
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+const API = import.meta.env.VITE_API_URL;
 
 const History = () => {
   const [transactions, setTransactions] = useState([]);
@@ -96,7 +13,7 @@ const History = () => {
         if (!token) throw new Error("No auth token found");
 
         const res = await fetch(
-          "http://localhost:5000/api/transactions/history",
+          `${API}/api/transactions/history`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

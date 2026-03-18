@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
 
@@ -13,7 +15,7 @@ const Notifications = () => {
       const token = localStorage.getItem("token");
 
       const res = await axios.get(
-        "http://localhost:5000/api/notifications",
+        `${API}/api/notifications`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Withdraw = () => {
   const [amount, setAmount] = useState("");
   const [transactionType, setTransactionType] = useState("withdraw");
@@ -23,7 +25,7 @@ const Withdraw = () => {
 
       if(transactionType === "withdraw"){
 
-        response = await axios.post("http://localhost:5000/api/transactions/withdraw",{
+        response = await axios.post(`${API}/api/transactions/withdraw`,{
           amount: Number(amount)
         },{
           headers:{ Authorization:`Bearer ${token}`}
@@ -31,7 +33,7 @@ const Withdraw = () => {
 
       }else{
 
-        response = await axios.post("http://localhost:5000/api/transactions/transfer",{
+        response = await axios.post(`${API}/api/transactions/transfer`,{
           amount: Number(amount),
           accountNumber:receiverAccount
         },{

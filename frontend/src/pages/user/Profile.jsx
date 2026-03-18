@@ -2,6 +2,7 @@ import  { useState ,useEffect } from 'react'
 import { Edit, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_URL;
 
 const Profile = () => {
 
@@ -12,7 +13,7 @@ const Profile = () => {
       try{
 
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/api/users/profile",{
+        const res = await fetch(`${API}/api/users/profile`,{
           headers: {
             Authorization : `Bearer ${token}`
           },

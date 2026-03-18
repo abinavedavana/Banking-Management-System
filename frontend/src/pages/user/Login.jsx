@@ -4,6 +4,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Shuffle } from "lucide-react";
 
+const API = import.meta.env.VITE_API_URL;
+
 
 const Login = () => {
 
@@ -21,7 +23,7 @@ const Login = () => {
     }
 
     try{
-      const response = await axios.post("http://localhost:5000/api/users/login",{
+      const response = await axios.post(`${API}/api/users/login`,{
         identifier,
         password
       });

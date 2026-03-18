@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+const API = import.meta.env.VITE_API_URL;
+
 const BankHistory = () => {
   const [transactions, setTransactioins] = useState([]);
   const [user, setUser] = useState([]);
@@ -11,7 +13,7 @@ const BankHistory = () => {
 
       try {
         const res = await fetch(
-          `http://localhost:5000/api/admin/transactions/${selectedUser._id}`,
+          `${API}/api/admin/transactions/${selectedUser._id}`,
         );
 
         const data = await res.json();

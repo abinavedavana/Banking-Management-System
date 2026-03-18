@@ -5,6 +5,8 @@ import toast from 'react-hot-toast';
 import { Shuffle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const API = import.meta.env.VITE_API_URL;
+
 const BankLogin = () => {
 
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const BankLogin = () => {
     
     try{
       const res = await axios.post(
-        "http://localhost:5000/api/admin/login",{
+        `${API}/api/admin/login`,{
           email:email,
           password:password,
         })

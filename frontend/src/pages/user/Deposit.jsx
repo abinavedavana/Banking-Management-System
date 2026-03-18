@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 
+const API = import.meta.env.VITE_API_URL;
+
 function Deposit() {
 
   const [amount , setAmount] = useState("")
@@ -19,7 +21,7 @@ function Deposit() {
     try{
       const token = localStorage.getItem("token");
 
-      const response = await axios.post("http://localhost:5000/api/transactions/deposit",{
+      const response = await axios.post(`${API}/api/transactions/deposit`,{
         amount:Number(amount)
       },{
         headers:{Authorization:`Bearer ${token}`}

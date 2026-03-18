@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
 
+const API = import.meta.env.VITE_API_URL;
+
 const EditProfile = () => {
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ useEffect(() => {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:5000/api/users/profile", {
+      const res = await fetch(`${API}/api/users/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
