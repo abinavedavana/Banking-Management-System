@@ -92,7 +92,7 @@ useEffect(() => {
         }
       });
 
-      const res = await fetch("http://localhost:5000/api/users/update-profile",{
+      const res = await fetch(`${API}/api/users/update-profile`,{
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -104,7 +104,7 @@ useEffect(() => {
 
       if(!res.ok) throw new Error(data.message);
 
-      const profileRes = await fetch("http://localhost:5000/api/users/profile",{
+      const profileRes = await fetch(`${API}/api/users/profile`,{
         headers: { Authorization: `Bearer ${token}`}
       });
 
