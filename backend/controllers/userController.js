@@ -2,8 +2,6 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs"); 
 const jwt = require("jsonwebtoken")
 
-const API = import.meta.env.VITE_API_URL;
-
 //REGISTER USER
 const registerUser = async (req,res) => {
     try{
@@ -139,7 +137,7 @@ const updateProfile = async (req,res) => {
         user.pan = req.body.pan || user.pan;
 
         if(req.file){
-            user.profilePic = `${API}/uploads/${req.file.filename}`;
+            user.profilePic = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
         }
 
         await user.save();
