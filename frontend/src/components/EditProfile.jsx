@@ -55,7 +55,7 @@ useEffect(() => {
         profilePic: null,
       });
 
-      setPreview(data.profilePic || null);
+      setPreview(data.profilePic ? `${API}${data.profilePic}` : null);
 
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");

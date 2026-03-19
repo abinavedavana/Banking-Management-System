@@ -24,9 +24,7 @@ app.use("/api/users",require("./routes/userRoutes"));
 app.use("/api/transactions",transactionRouter);
 app.use("/api/notifications",notificationRoutes);
 app.use("/api/admin",adminRoutes);
-app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
-});
+
 
 const PORT = process.env.PORT || 5000;
 
