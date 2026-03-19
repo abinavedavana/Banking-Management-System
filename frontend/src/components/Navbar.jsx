@@ -3,27 +3,33 @@ import { useState , useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
-const API = import.meta.env.VITE_API_URL;
-
 const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-      const handleStorageChange = () => {
-        const updatedUser = JSON.parse(localStorage.getItem("currentUser") || null);
-        setUser(updatedUser);
-      };
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    setUser(storedUser);
 
-      window.addEventListener("storage", handleStorageChange);
-      return () => window.removeEventListener("storage", handleStorageChange);
-    }, []);
+    const handleStorageChange = () => {
+      const updatedUser = JSON.parse(localStorage.getItem("currentUser"));
+      setUser(updatedUser);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
 
   const firstLetter = user?.name?.charAt(0)?.toUpperCase();
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("token")
+
+    window.dispatchEvent(new Event("storage"));
+
     toast.success("LogOut Successful")
     navigate("/");
   };
@@ -35,7 +41,7 @@ const Navbar = () => {
         <Link to="/profile" className="flex items-center">
           {user?.profilePic ? (
             <img
-              src={`${API}${user.profilePic}`}
+              src={user.profilePic}
               alt="profile"
               className="w-10 h-10 rounded-full object-cover border border-white"
             />

@@ -126,7 +126,14 @@ useEffect(() => {
       });
 
       const updatedUser = await profileRes.json();
+
+      if (updatedUser.profilePic) {
+      updatedUser.profilePic = `${API}${updatedUser.profilePic}`;
+      }
+
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+
+      window.dispatchEvent(new Event("storage"));
 
       toast.success("Profile Updated successfully");
       navigate("/profile");
