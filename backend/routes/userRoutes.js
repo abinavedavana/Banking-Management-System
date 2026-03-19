@@ -5,7 +5,7 @@ const {protect} = require("../middleware/authMiddleware")
 const upload = require("../middleware/uploads");
 
 
-router.post("/register",registerUser);
+router.post("/register", upload.single("profilePic"), registerUser);
 router.post("/login",loginUser)
 router.get("/profile", protect , getProfile)
 router.put("/update-profile", protect , upload.single("profilePic"),updateProfile);
