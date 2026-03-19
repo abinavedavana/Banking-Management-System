@@ -1,5 +1,5 @@
 import { Bell, LogOut, Menu, User, X } from "lucide-react";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
