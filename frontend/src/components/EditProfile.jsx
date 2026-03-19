@@ -63,6 +63,7 @@ useEffect(() => {
   };
 
   fetchProfile();
+  console.log("PROFILE DATA:", data);
 }, []);
 
   useEffect(() => {
@@ -108,6 +109,7 @@ useEffect(() => {
             formDataToSend.append(key, formData[key]);
           }
         }
+        console.log("UPDATED USER:", updatedUser);
       });
 
       const res = await fetch(`${API}/api/users/update-profile`,{
@@ -122,7 +124,7 @@ useEffect(() => {
       if(!res.ok) throw new Error(data.message);
 
       const updatedUser = data;
-      
+
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
       window.dispatchEvent(new Event("storage"));
