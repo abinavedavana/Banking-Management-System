@@ -88,8 +88,13 @@ useEffect(() => {
 
       const formDataToSend = new FormData();
 
+      console.log("FormData contents:")
+
       Object.keys(formData).forEach((key) => {
         if(formData[key] && formData[key] !== ""){
+
+          console.log(key, formData[key] instanceof File ? "File: " + formData[key].name : formData[key]);
+
           formDataToSend.append(key,formData[key]);
         }
       });
@@ -103,6 +108,7 @@ useEffect(() => {
       });
 
       const data = await res.json();
+      console.log("Update response:", data);
 
       if(!res.ok) throw new Error(data.message);
 
@@ -111,12 +117,16 @@ useEffect(() => {
       });
 
       const updatedUser = await profileRes.json();
+
+      console.log("Updated user from profile:", updatedUser);
+
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
       toast.success("Profile Updated successfully");
       navigate("/profile");
 
     }catch(error){
+      console.error("Update error:", error);
       toast.error(error.message);
     }
   };
