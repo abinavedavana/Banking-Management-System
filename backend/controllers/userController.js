@@ -15,7 +15,6 @@ const registerUser = async (req,res) => {
             dob,
             pan,
             aadhar,
-            profilePic,
         } = req.body;
 
         if(!name || !username || !email || !password){
@@ -30,11 +29,7 @@ const registerUser = async (req,res) => {
             return res.status(400).json({message:"User already exists"});
         }
 
-        let profilePicUrl = "";
-
-        if (req.file) {
-        profilePicUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
-        }
+        const profilePicUrl = req.file ? req.file.path : "";
 
         const hashedPassword = await bcrypt.hash(password,10);
 

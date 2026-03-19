@@ -22,11 +22,12 @@ const EditProfile = () => {
     age: "",
     aadhar: "",
     pan: "",
-    profilePic: "",
+    profilePic: null,
   });
 
   const [preview, setPreview] = useState(null);
 
+//fetch profile
 useEffect(() => {
   const fetchProfile = async () => {
     try {
@@ -64,12 +65,21 @@ useEffect(() => {
   fetchProfile();
 }, []);
 
+  useEffect(() => {
+    return () => {
+      if (preview && preview.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
+
 
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+  //image upload
   function handleImageUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -80,6 +90,7 @@ useEffect(() => {
 
 
 
+  //update profile
   async function handleUpdate() {
     try{
       const token = localStorage.getItem("token");
@@ -87,8 +98,15 @@ useEffect(() => {
       const formDataToSend = new FormData();
 
       Object.keys(formData).forEach((key) => {
-        if(formData[key]){
-          formDataToSend.append(key,formData[key]);
+        if (key === "profilePic") {
+
+          if (formData.profilePic instanceof File) {
+            formDataToSend.append("profilePic", formData.profilePic);
+          }
+        } else {
+          if (formData[key] !== null && formData[key] !== "") {
+            formDataToSend.append(key, formData[key]);
+          }
         }
       });
 
@@ -101,7 +119,6 @@ useEffect(() => {
       });
 
       const data = await res.json();
-
       if(!res.ok) throw new Error(data.message);
 
       const profileRes = await fetch(`${API}/api/users/profile`,{

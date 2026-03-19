@@ -27,12 +27,21 @@ const Register = () => {
       branch:"Calicut",
       ifsc:"HORZB14145",
       accountNo:"XXXX XXXX XXXX 1234",
-      profilePic:"",
+      profilePic:null,
       transactions:[],
     });
 
 
   const [preview , setPreview] = useState(null);
+
+    //Cleanup memory
+  useEffect(() => {
+    return () => {
+      if (preview && preview.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    };
+  }, [preview]);
 
   function handleChange(e){
     const {name , value} = e.target;
@@ -65,20 +74,17 @@ const Register = () => {
       //registration
       const formDataToSend = new FormData();
 
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("username", formData.username);
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("password", formData.password);
-      formDataToSend.append("address", formData.address);
-      formDataToSend.append("phone", formData.phone);
-      formDataToSend.append("age", formData.age);
-      formDataToSend.append("dob", formData.dob);
-      formDataToSend.append("aadhar", formData.aadhar);
-      formDataToSend.append("pan", formData.pan);
-
-      if (formData.profilePic) {
-        formDataToSend.append("profilePic", formData.profilePic);
-      }
+      Object.keys(formData).forEach((key) => {
+        if (key === "profilePic") {
+          if (formData.profilePic instanceof File) {
+            formDataToSend.append("profilePic", formData.profilePic);
+          }
+        } else if (key !== "confirmPassword") {
+          if (formData[key] !== null && formData[key] !== "") {
+            formDataToSend.append(key, formData[key]);
+          }
+        }
+      });
 
       await axios.post(`${API}/api/users/register`, formDataToSend, {
         headers: {
@@ -93,6 +99,19 @@ const Register = () => {
       })
 
       const token = loginRes.data.token;
+
+      // STORE TOKEN
+      localStorage.setItem("token", token);
+
+      //  FETCH PROFILE
+      const profileRes = await axios.get(`${API}/api/users/profile`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // STORE USER 
+      localStorage.setItem("currentUser", JSON.stringify(profileRes.data));
 
       //deposit initial ammount
       await axios.post(`${API}/api/transactions/deposit`,{
