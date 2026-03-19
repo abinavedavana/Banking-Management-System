@@ -22,12 +22,11 @@ const EditProfile = () => {
     age: "",
     aadhar: "",
     pan: "",
-    profilePic: null,
+    profilePic: "",
   });
 
   const [preview, setPreview] = useState(null);
 
-//fetch profile
 useEffect(() => {
   const fetchProfile = async () => {
     try {
@@ -55,7 +54,7 @@ useEffect(() => {
         profilePic: null,
       });
 
-      setPreview(data.profilePic);
+      setPreview(data.profilePic || null);
 
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");
@@ -63,16 +62,7 @@ useEffect(() => {
   };
 
   fetchProfile();
-  
 }, []);
-
-  useEffect(() => {
-    return () => {
-      if (preview && preview.startsWith("blob:")) {
-        URL.revokeObjectURL(preview);
-      }
-    };
-  }, [preview]);
 
 
   function handleChange(e) {
@@ -80,7 +70,6 @@ useEffect(() => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
-  //image upload
   function handleImageUpload(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -91,7 +80,6 @@ useEffect(() => {
 
 
 
-  //update profile
   async function handleUpdate() {
     try{
       const token = localStorage.getItem("token");
@@ -99,17 +87,9 @@ useEffect(() => {
       const formDataToSend = new FormData();
 
       Object.keys(formData).forEach((key) => {
-        if (key === "profilePic") {
-
-          if (formData.profilePic instanceof File) {
-            formDataToSend.append("profilePic", formData.profilePic);
-          }
-        } else {
-          if (formData[key] !== null && formData[key] !== "") {
-            formDataToSend.append(key, formData[key]);
-          }
+        if(formData[key]){
+          formDataToSend.append(key,formData[key]);
         }
-        
       });
 
       const res = await fetch(`${API}/api/users/update-profile`,{
@@ -121,13 +101,15 @@ useEffect(() => {
       });
 
       const data = await res.json();
+
       if(!res.ok) throw new Error(data.message);
 
-      const updatedUser = data;
+      const profileRes = await fetch(`${API}/api/users/profile`,{
+        headers: { Authorization: `Bearer ${token}`}
+      });
 
+      const updatedUser = await profileRes.json();
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-
-      window.dispatchEvent(new Event("storage"));
 
       toast.success("Profile Updated successfully");
       navigate("/profile");
