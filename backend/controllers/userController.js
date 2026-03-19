@@ -127,8 +127,13 @@ const getProfile = async (req,res) => {
 //UpdateProfile
 const updateProfile = async (req,res) => {
     try{
-        console.log("Update profile called");
-        console.log("req.file:", req.file ? "File uploaded - " + req.file.path : "No file");
+        console.log("========== UPDATE PROFILE CALLED ==========");
+        console.log("req.user._id:", req.user._id);
+        console.log("req.file:", req.file ? {
+            path: req.file.path,
+            filename: req.file.filename,
+            size: req.file.size
+        } : "No file uploaded");
 
         const user = await User.findById(req.user._id);
 
@@ -155,6 +160,7 @@ const updateProfile = async (req,res) => {
         }
 
         await user.save();
+        console.log("User saved successfully");
 
         const updatedUser = await User.findById(user._id).select("-password");
 
