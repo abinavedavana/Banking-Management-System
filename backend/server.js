@@ -12,7 +12,10 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://banking-management-system-3dbzc8bay-abinavedavanas-projects.vercel.app",
+  credentials: true
+}));
 app.use(express.json());
 
 app.use("/uploads",express.static(path.join(__dirname,"uploads")));
