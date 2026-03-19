@@ -143,7 +143,7 @@ const updateProfile = async (req,res) => {
 
         await user.save();
 
-        res.json({message:"Profile updated successfully"});
+        res.json({user});
 
     }catch (error) {
   console.error("UPDATE PROFILE ERROR:", error);

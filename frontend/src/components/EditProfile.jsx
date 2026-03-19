@@ -55,7 +55,7 @@ useEffect(() => {
         profilePic: null,
       });
 
-      setPreview(data.profilePic ? `${API}${data.profilePic}` : null);
+      setPreview(data.profilePic || null);
 
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");
@@ -126,11 +126,6 @@ useEffect(() => {
       });
 
       const updatedUser = await profileRes.json();
-
-      if (updatedUser.profilePic) {
-      updatedUser.profilePic = `${API}${updatedUser.profilePic}`;
-      }
-
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
       window.dispatchEvent(new Event("storage"));
