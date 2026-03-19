@@ -118,6 +118,9 @@ const loginUser = async (req,res) => {
 const getProfile = async (req,res) => {
     try{
         const user = await User.findById(req.user.id).select("-password");
+
+         console.log("Profile fetched:", user.profilePic ? "Has pic" : "No pic");
+
         res.json(user);
     }catch(error){
         res.status(500).json({message: "Server Error"})
@@ -127,7 +130,17 @@ const getProfile = async (req,res) => {
 //UpdateProfile
 const updateProfile = async (req,res) => {
     try{
+        console.log("Update profile called");
+        console.log("req.file:", req.file ? "File uploaded" : "No file");
+        console.log("req.body:", Object.keys(req.body));
+
         const user = await User.findById(req.user._id);
+
+        console.log("Current user profilePic:", user.profilePic);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
         user.name = req.body.name || user.name;
         user.username = req.body.username || user.username;
@@ -146,6 +159,9 @@ const updateProfile = async (req,res) => {
         await user.save();
 
         const updatedUser = await User.findById(user._id).select("-password");
+
+        console.log("Updated user profilePic:", updatedUser.profilePic);
+
         res.json(updatedUser)
 
     }catch (error) {

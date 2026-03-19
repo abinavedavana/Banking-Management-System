@@ -56,6 +56,8 @@ useEffect(() => {
 
       setPreview(data.profilePic || null);
 
+      console.log("Profile pic from API:", data.profilePic);
+
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");
     }
