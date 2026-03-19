@@ -55,7 +55,7 @@ useEffect(() => {
         profilePic: null,
       });
 
-      setPreview(data.profilePic || null);
+      setPreview(data.profilePic);
 
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");

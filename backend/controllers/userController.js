@@ -118,15 +118,7 @@ const loginUser = async (req,res) => {
 const getProfile = async (req,res) => {
     try{
         const user = await User.findById(req.user.id).select("-password");
-
-        let userObj = user.toObject();
-
-        if (userObj.profilePic && !userObj.profilePic.startsWith("http")) {
-            userObj.profilePic = `${process.env.BASE_URL}${userObj.profilePic}`;
-        }
-
-        res.json(userObj);
-
+        res.json(user);
     }catch(error){
         res.status(500).json({message: "Server Error"})
     }
@@ -153,7 +145,7 @@ const updateProfile = async (req,res) => {
 
         await user.save();
 
-        res.json({user});
+        res.json(user);
 
     }catch (error) {
   console.error("UPDATE PROFILE ERROR:", error);
