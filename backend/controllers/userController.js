@@ -118,7 +118,15 @@ const loginUser = async (req,res) => {
 const getProfile = async (req,res) => {
     try{
         const user = await User.findById(req.user.id).select("-password");
-        res.json(user);
+
+        let userObj = user.toObject();
+
+        if (userObj.profilePic && !userObj.profilePic.startsWith("http")) {
+            userObj.profilePic = `${process.env.BASE_URL}${userObj.profilePic}`;
+        }
+
+        res.json(userObj);
+
     }catch(error){
         res.status(500).json({message: "Server Error"})
     }
