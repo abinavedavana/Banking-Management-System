@@ -15,7 +15,7 @@ const registerUser = async (req,res) => {
             dob,
             pan,
             aadhar,
-            profilePic
+            profilePic,
         } = req.body;
 
         if(!name || !username || !email || !password){

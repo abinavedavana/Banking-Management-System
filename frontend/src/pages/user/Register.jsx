@@ -44,9 +44,8 @@ const Register = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const imageURL = URL.createObjectURL(file);
-    setPreview(imageURL);
-    setFormData((prev)=> ({...prev, profilePic:imageURL}))
+    setPreview(URL.createObjectURL(file));
+    setFormData((prev) => ({ ...prev, profilePic: file }));
   }
 
   async function handleRegister(){
@@ -64,18 +63,27 @@ const Register = () => {
     try{
 
       //registration
-      await axios.post(`${API}/api/users/register`, {
-        name: formData.name,
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        address: formData.address,
-        phone: formData.phone,
-        age: formData.age,
-        dob: formData.dob,
-        aadhar: formData.aadhar,
-        pan: formData.pan,
-        profilePic: formData.profilePic,
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("username", formData.username);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("address", formData.address);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("age", formData.age);
+      formDataToSend.append("dob", formData.dob);
+      formDataToSend.append("aadhar", formData.aadhar);
+      formDataToSend.append("pan", formData.pan);
+
+      if (formData.profilePic) {
+        formDataToSend.append("profilePic", formData.profilePic);
+      }
+
+      await axios.post(`${API}/api/users/register`, formDataToSend, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       //login to get token
