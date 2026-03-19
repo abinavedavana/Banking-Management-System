@@ -29,7 +29,7 @@ const registerUser = async (req,res) => {
             return res.status(400).json({message:"User already exists"});
         }
 
-        const profilePicUrl = req.file ? req.file.path : "";
+        const profilePicUrl = req.file?.path || "";
 
         const hashedPassword = await bcrypt.hash(password,10);
 
