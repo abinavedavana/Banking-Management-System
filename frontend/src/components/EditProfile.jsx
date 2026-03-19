@@ -121,11 +121,8 @@ useEffect(() => {
       const data = await res.json();
       if(!res.ok) throw new Error(data.message);
 
-      const profileRes = await fetch(`${API}/api/users/profile`,{
-        headers: { Authorization: `Bearer ${token}`}
-      });
-
-      const updatedUser = await profileRes.json();
+      const updatedUser = data;
+      
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
 
       window.dispatchEvent(new Event("storage"));
