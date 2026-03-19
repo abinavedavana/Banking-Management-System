@@ -3,6 +3,8 @@ import { useState , useEffect } from "react";
 import toast from "react-hot-toast";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 
+const API = import.meta.env.VITE_API_URL;
+
 const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false)
@@ -10,7 +12,7 @@ const Navbar = () => {
 
   useEffect(() => {
       const handleStorageChange = () => {
-        const updatedUser = JSON.parse(localStorage.getItem("currentUser") || "{}");
+        const updatedUser = JSON.parse(localStorage.getItem("currentUser") || null);
         setUser(updatedUser);
       };
 
@@ -33,7 +35,7 @@ const Navbar = () => {
         <Link to="/profile" className="flex items-center">
           {user?.profilePic ? (
             <img
-              src={user.profilePic}
+              src={`${API}${user.profilePic}`}
               alt="profile"
               className="w-10 h-10 rounded-full object-cover border border-white"
             />
