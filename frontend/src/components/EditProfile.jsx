@@ -87,7 +87,7 @@ useEffect(() => {
       const formDataToSend = new FormData();
 
       Object.keys(formData).forEach((key) => {
-        if(formData[key]){
+        if(formData[key] && formData[key] !== ""){
           formDataToSend.append(key,formData[key]);
         }
       });

@@ -145,7 +145,8 @@ const updateProfile = async (req,res) => {
 
         await user.save();
 
-        res.json(user);
+        const updatedUser = await User.findById(user._id).select("-password");
+        res.json(updatedUser)
 
     }catch (error) {
   console.error("UPDATE PROFILE ERROR:", error);
