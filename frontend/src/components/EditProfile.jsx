@@ -56,8 +56,6 @@ useEffect(() => {
 
       setPreview(data.profilePic || null);
 
-      console.log("Profile pic from API:", data.profilePic);
-
     } catch (error) {
       toast.error( error.message || "Profile fetch failed");
     }
@@ -108,9 +106,11 @@ useEffect(() => {
       });
 
       const data = await res.json();
-      console.log("Update response:", data);
-
       if(!res.ok) throw new Error(data.message);
+
+      localStorage.setItem("currentUser", JSON.stringify(data));
+
+      window.dispatchEvent(new Event("storage"));
 
       const profileRes = await fetch(`${API}/api/users/profile`,{
         headers: { Authorization: `Bearer ${token}`}
@@ -126,7 +126,6 @@ useEffect(() => {
       navigate("/profile");
 
     }catch(error){
-      console.error("Update error:", error);
       toast.error(error.message);
     }
   };

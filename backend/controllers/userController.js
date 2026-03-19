@@ -127,7 +127,6 @@ const getProfile = async (req,res) => {
 //UpdateProfile
 const updateProfile = async (req,res) => {
     try{
-        console.log("========== UPDATE PROFILE CALLED ==========");
         console.log("req.user._id:", req.user._id);
         console.log("req.file:", req.file ? {
             path: req.file.path,
@@ -154,13 +153,9 @@ const updateProfile = async (req,res) => {
         if (req.file) {
             user.profilePic = req.file.path; 
             console.log("Updated profilePic to Cloudinary URL:", user.profilePic);
-        }else{
-             console.log("No new file, keeping existing profilePic:", user.profilePic);
-
         }
 
         await user.save();
-        console.log("User saved successfully");
 
         const updatedUser = await User.findById(user._id).select("-password");
 
@@ -169,7 +164,6 @@ const updateProfile = async (req,res) => {
         res.json(updatedUser)
 
     }catch (error) {
-  console.error("UPDATE PROFILE ERROR:", error);
   res.status(500).json({ message: error.message });
 }
 }
