@@ -13,7 +13,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: "https://banking-management-system-3dbzc8bay-abinavedavanas-projects.vercel.app",
+  origin: "https://banking-management-system-nine.vercel.app",
   credentials: true
 }));
 app.use(express.json());
