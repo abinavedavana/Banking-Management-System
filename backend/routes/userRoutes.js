@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {registerUser, loginUser , getProfile , updateProfile} = require("../controllers/userController");
 const {protect} = require("../middleware/authMiddleware")
-const upload = require("../middleware/upload.js");
+const upload = require("../middleware/uploads");
 
 
 router.post("/register", upload.single("profilePic"), registerUser);
